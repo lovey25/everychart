@@ -1,6 +1,15 @@
 ## everyChart from "React Stockcharts"
 
-"React Stockcharts"의 유지보수가 수해동안 중단되어 makeover 하기위한 프로젝트 임
+"React Stockcharts"의 유지보수가 수해 동안 중단되어 react, d3.js 최신버전으로 migration 하기위한 프로젝트 임
+
+## ToDos
+
+- [ ] 일단 그래프 출력
+- [ ] componentWillMount 제거
+- [ ] componentWillReceiveProps 제거
+- [ ] Legacy context API 처리
+
+🔽🔽🔽🔽🔽🔽 이하 원본 🔽🔽🔽🔽🔽🔽
 
 [![Join the chat at https://gitter.im/rrag/react-stockcharts](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rrag/react-stockcharts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/react-stockcharts.svg)](https://badge.fury.io/js/react-stockcharts)
