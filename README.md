@@ -4,7 +4,7 @@
 
 ## ToDos
 
-- [ ] 일단 그래프 출력
+- [x] 일단 그래프 출력
 - [ ] componentWillMount 제거
 - [ ] componentWillReceiveProps 제거
 - [ ] Legacy context API 처리

@@ -118,7 +118,7 @@ export default function financeDiscontinuousScale(
         }
       }
 
-      const tickValues = ticksSet.values().map((d) => parseInt(d, 10));
+      const tickValues = Array.from(ticksSet).map((d) => parseInt(d, 10));
 
       // console.log(ticks.length, tickValues, level);
       // console.log(ticks, tickValues, distance);

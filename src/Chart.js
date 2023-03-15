@@ -94,7 +94,7 @@ class CandleStickChartWithZoomPan extends React.Component {
         displayXAccessor={displayXAccessor}
       >
         <Chart id={1} yExtents={(d) => [d.high, d.low]}>
-          {/* <XAxis
+          <XAxis
             axisAt="bottom"
             orient="bottom"
             zoomEnabled={zoomEvent}
@@ -112,13 +112,13 @@ class CandleStickChartWithZoomPan extends React.Component {
             at="right"
             orient="right"
             displayFormat={format(".2f")}
-          /> */}
+          />
 
           <CandlestickSeries />
-          {/* <OHLCTooltip origin={[-40, 0]} /> */}
-          {/* <ZoomButtons onReset={this.handleReset} /> */}
+          <OHLCTooltip origin={[-40, 0]} />
+          <ZoomButtons onReset={this.handleReset} />
         </Chart>
-        {/* <Chart
+        <Chart
           id={2}
           yExtents={(d) => d.volume}
           height={150}
@@ -147,8 +147,8 @@ class CandleStickChartWithZoomPan extends React.Component {
             yAccessor={(d) => d.volume}
             fill={(d) => (d.close > d.open ? "#6BA583" : "#FF0000")}
           />
-        </Chart> */}
-        {/* <CrossHairCursor /> */}
+        </Chart>
+        <CrossHairCursor />
       </ChartCanvas>
     );
   }
