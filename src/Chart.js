@@ -26,6 +26,7 @@ class CandleStickChartWithZoomPan extends React.Component {
     this.handleReset = this.handleReset.bind(this);
   }
   componentWillMount() {
+    // 요건 좀 문젠데??
     this.setState({
       suffix: 1,
     });
