@@ -5,9 +5,11 @@
 ## ToDos
 
 - [x] 일단 그래프 출력
-- [ ] componentWillMount 제거
+- [x] componentWillMount 제거
+  - constructor 안으로 집어넣음
 - [ ] componentWillReceiveProps 제거
 - [ ] Legacy context API 처리
+  - Chart, ChartCanvas, CrossHairCorsor, GenericChartComponent, GenericComponent, XAxis, YAxis, ZoomButtons
 
 🔽🔽🔽🔽🔽🔽 이하 원본 🔽🔽🔽🔽🔽🔽
 

@@ -52,13 +52,13 @@ class EventCapture extends Component {
     this.state = {
       panInProgress: false,
     };
+
+    this.focus = props.focus;
   }
   saveNode(node) {
     this.node = node;
   }
-  componentWillMount() {
-    this.focus = this.props.focus;
-  }
+
   componentDidMount() {
     if (this.node) {
       select(this.node)

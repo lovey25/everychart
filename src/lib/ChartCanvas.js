@@ -348,7 +348,7 @@ function pinchCoordinates(pinch) {
 }
 
 class ChartCanvas extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.getDataInfo = this.getDataInfo.bind(this);
     this.getCanvasContexts = this.getCanvasContexts.bind(this);
@@ -395,6 +395,10 @@ class ChartCanvas extends Component {
     this.state = {};
     this.mutableState = {};
     this.lastSubscriptionId = 0;
+
+    const { fullData, ...state } = resetChart(props, true);
+    this.state = state;
+    this.fullData = fullData;
   }
   saveEventCaptureNode(node) {
     this.eventCaptureNode = node;
@@ -1064,11 +1068,7 @@ class ChartCanvas extends Component {
       setCursorClass: this.setCursorClass,
     };
   }
-  componentWillMount() {
-    const { fullData, ...state } = resetChart(this.props, true);
-    this.setState(state);
-    this.fullData = fullData;
-  }
+
   componentWillReceiveProps(nextProps) {
     const reset = shouldResetChart(this.props, nextProps);
 

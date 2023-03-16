@@ -40,6 +40,18 @@ class GenericComponent extends Component {
     this.state = {
       updateCount: 0,
     };
+
+    const { subscribe, chartId } = context;
+    const { clip, edgeClip } = props;
+    subscribe(this.suscriberId, {
+      chartId,
+      clip,
+      edgeClip,
+      listener: this.listener,
+      draw: this.draw,
+      getPanConditions: this.getPanConditions,
+    });
+    this.componentWillReceiveProps(props, context);
   }
   updateMoreProps(moreProps) {
     Object.keys(moreProps).forEach((key) => {
@@ -255,20 +267,7 @@ class GenericComponent extends Component {
       }
     }
   }
-  componentWillMount() {
-    const { subscribe, chartId } = this.context;
-    const { clip, edgeClip } = this.props;
 
-    subscribe(this.suscriberId, {
-      chartId,
-      clip,
-      edgeClip,
-      listener: this.listener,
-      draw: this.draw,
-      getPanConditions: this.getPanConditions,
-    });
-    this.componentWillReceiveProps(this.props, this.context);
-  }
   componentWillUnmount() {
     const { unsubscribe } = this.context;
     unsubscribe(this.suscriberId);

@@ -10,14 +10,14 @@ class Chart extends PureComponent {
     super(props, context);
     this.yScale = this.yScale.bind(this);
     this.listener = this.listener.bind(this);
-  }
-  componentWillMount() {
-    const { id } = this.props;
-    const { subscribe } = this.context;
+
+    const { id } = props;
+    const { subscribe } = context;
     subscribe("chart_" + id, {
       listener: this.listener,
     });
   }
+
   componentWillUnmount() {
     const { id } = this.props;
     const { unsubscribe } = this.context;
