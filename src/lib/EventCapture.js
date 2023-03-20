@@ -159,7 +159,7 @@ class EventCapture extends Component {
     const { onMouseMove, mouseMove } = this.props;
 
     if (this.mouseInteraction && mouseMove && !this.state.panInProgress) {
-      const newPos = pointer(this.node);
+      const newPos = pointer(e, this.node);
 
       onMouseMove(newPos, "mouse", e);
     }
@@ -210,7 +210,7 @@ class EventCapture extends Component {
   handleDrag(e) {
     if (this.props.onDrag) {
       this.dragHappened = true;
-      const mouseXY = pointer(this.node);
+      const mouseXY = pointer(e, this.node);
       this.props.onDrag(
         {
           startPos: this.state.dragStartPosition,
@@ -232,7 +232,7 @@ class EventCapture extends Component {
     this.mouseInteraction = true;
   }
   handleDragEnd(e) {
-    const mouseXY = pointer(this.node);
+    const mouseXY = pointer(e, this.node);
 
     const win = d3Window(this.node);
     select(win)
@@ -337,8 +337,8 @@ class EventCapture extends Component {
       const { panStartXScale, panOrigin, chartsToPan } = this.state.panStart;
 
       const mouseXY = this.mouseInteraction
-        ? pointer(this.node)
-        : pointers(this.node)[0];
+        ? pointer(e, this.node)
+        : pointers(e, this.node)[0];
 
       this.lastNewPos = mouseXY;
       const dx = mouseXY[0] - panOrigin[0];
@@ -457,7 +457,7 @@ class EventCapture extends Component {
     }
   }
   handlePinchZoom(e) {
-    const [touch1Pos, touch2Pos] = pointers(this.node);
+    const [touch1Pos, touch2Pos] = pointers(e, this.node);
     const { xScale, zoom: zoomEnabled, onPinchZoom } = this.props;
 
     // eslint-disable-next-line no-unused-vars
