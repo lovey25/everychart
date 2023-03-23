@@ -1069,21 +1069,23 @@ class ChartCanvas extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const reset = shouldResetChart(this.props, nextProps);
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    const reset = shouldResetChart(this.props, prevProps);
 
     const interaction = isInteractionEnabled(
       this.state.xScale,
       this.state.xAccessor,
       this.state.plotData
     );
+
     const { chartConfig: initialChartConfig } = this.state;
 
     let newState;
+
     if (
       !interaction ||
       reset ||
-      !shallowEqual(this.props.xExtents, nextProps.xExtents)
+      !shallowEqual(this.props.xExtents, prevProps.xExtents)
     ) {
       if (process.env.NODE_ENV !== "production") {
         if (!interaction)
@@ -1096,19 +1098,19 @@ class ChartCanvas extends Component {
         else log("xExtents changed");
       }
       // do reset
-      newState = resetChart(nextProps);
+      newState = resetChart(this.props);
       this.mutableState = {};
     } else {
       const [start, end] = this.state.xScale.domain();
       const prevLastItem = last(this.fullData);
 
-      const calculatedState = calculateFullData(nextProps);
+      const calculatedState = calculateFullData(this.props);
       const { xAccessor } = calculatedState;
       const lastItemWasVisible =
         xAccessor(prevLastItem) <= end && xAccessor(prevLastItem) >= start;
 
       if (process.env.NODE_ENV !== "production") {
-        if (this.props.data !== nextProps.data)
+        if (this.props.data !== prevProps.data)
           log(
             "data is changed but seriesName did not, change the seriesName if you wish to reset the chart and lastItemWasVisible = ",
             lastItemWasVisible
@@ -1122,7 +1124,7 @@ class ChartCanvas extends Component {
       newState = updateChart(
         calculatedState,
         this.state.xScale,
-        nextProps,
+        this.props,
         lastItemWasVisible,
         initialChartConfig
       );
@@ -1136,29 +1138,34 @@ class ChartCanvas extends Component {
       }
     } else {
       /*
-			if (!reset) {
-				state.chartConfig
-					.forEach((each) => {
-						// const sourceChartConfig = initialChartConfig.filter(d => d.id === each.id);
-						const prevChartConfig = find(initialChartConfig, d => d.id === each.id);
-						if (isDefined(prevChartConfig) && prevChartConfig.yPanEnabled) {
-							each.yScale.domain(prevChartConfig.yScale.domain());
-							each.yPanEnabled = prevChartConfig.yPanEnabled;
-						}
-					});
-			}
-			*/
+  		if (!reset) {
+  			state.chartConfig
+  				.forEach((each) => {
+  					// const sourceChartConfig = initialChartConfig.filter(d => d.id === each.id);
+  					const prevChartConfig = find(initialChartConfig, d => d.id === each.id);
+  					if (isDefined(prevChartConfig) && prevChartConfig.yPanEnabled) {
+  						each.yScale.domain(prevChartConfig.yScale.domain());
+  						each.yPanEnabled = prevChartConfig.yPanEnabled;
+  					}
+  				});
+  		}
+  		*/
       this.clearThreeCanvas();
-
-      this.setState(state);
+      return state;
     }
     this.fullData = fullData;
+
+    return null;
   }
-  /*
-	componentDidUpdate(prevProps, prevState) {
-		console.error(this.state.chartConfig, this.state.chartConfig.map(d => d.yScale.domain()));
-	}
-	*/
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.error(this.state.chartConfig, this.state.chartConfig.map(d => d.yScale.domain()));
+
+    if (prevState.plotData.length !== snapshot.plotData.length) {
+      this.setState(snapshot);
+    }
+  }
+
   resetYDomain(chartId) {
     const { chartConfig } = this.state;
     let changed = false;
